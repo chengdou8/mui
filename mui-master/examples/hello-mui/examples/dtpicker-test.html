@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" type="text/css" href="../css/app.css" />
+		<link rel="stylesheet" type="text/css" href="../css/mui.picker.min.css" />
+		<style>
+			html,
+			body,
+			.mui-content {
+				height: 0px;
+				margin: 0px;
+				background-color: #efeff4;
+			}
+			h5.mui-content-padded {
+				margin-left: 3px;
+				margin-top: 20px !important;
+			}
+			h5.mui-content-padded:first-child {
+				margin-top: 12px !important;
+			}
+			.mui-btn {
+				font-size: 16px;
+				padding: 8px;
+				margin: 3px;
+			}
+			.ui-alert {
+				text-align: center;
+				padding: 20px 10px;
+				font-size: 16px;
+			}
+			* {
+				-webkit-touch-callout: none;
+				-webkit-user-select: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">dtpicker（日期时间选择器）</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-content-padded">
+
+				<h5 class="mui-content-padded">设定年份区间</h5>
+				<input id='demo2' data-options='{"type":"date","beginYear":1949,"endYear":2010}' class="btn mui-btn mui-btn-block" value="" placeholder="选择日期 ...">
+				<h5 class="mui-content-padded">设定选中的时间</h5>
+				<input id='demo3' data-options='{"value":"2015-10-10 10:10","beginYear":2010,"endYear":2020}' value="" class="btn mui-btn mui-btn-block" placeholder="选择日期时间 ...">
+				<h5 class="mui-content-padded">指定类型</h5>
+				<input id='demo4' data-options='{"type":"date"}' class="btn mui-btn mui-btn-block" value="" placeholder="选择日期 ...">
+				<input id='demo5' data-options='{"type":"time"}' class="btn mui-btn mui-btn-block" value="" placeholder="选择时间 ...">
+				<input id='demo6' data-options='{"type":"month"}' class="btn mui-btn mui-btn-block" value="" placeholder="选择月份 ...">
+				<h5 class="mui-content-padded">自定义数据</h5>
+				<input id='demo7' data-options='{"type":"json","customData":{"address":[{"text":"西安市南二环中段156号","value":"西安市南二环中段156号"},{"text":"西安市永宁门外地铁B出口","value":"西安市永宁门外地铁B出口"},{"text":"西安市玉祥门105号","value":"西安市玉祥门105号"}]},"labels":["集合地点"]}' class="btn mui-btn mui-btn-block" value="" placeholder="选择时段 ...">
+			</div>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<!--<script src="../js/mui.picker.js"></script>
+		<script src="../js/mui.dtpicker.js"></script>-->
+		<script src="../js/mui.picker.min.js"></script>
+		<script>
+			(function($) {
+				$.init();
+				var btns = $('.btn');
+				btns.each(function(i, btn) {
+					btn.addEventListener('tap', function() {
+						var _self = this;
+						if(_self.picker) {
+							_self.picker.show(function (rs) {
+								_self.value = rs.text
+								_self.picker.dispose();
+								_self.picker = null;
+							});
+						} else {
+							var optionsJson = this.getAttribute('data-options') || '{}';
+							var options = JSON.parse(optionsJson);
+							var id = this.getAttribute('id');
+							_self.picker = new $.DtPicker(options);
+							_self.picker.show(function(rs) {
+								_self.value = rs.text
+								_self.picker.dispose();
+								_self.picker = null;
+							});
+						}
+
+					}, false);
+				});
+			})(mui);
+			
+			function p(s) {
+			    return s < 10 ? '0' + s: s;
+			}
+		</script>
+	</body>
+
+</html>
